@@ -8,8 +8,13 @@
     <link rel="apple-touch-icon" href="TemplateData/favicons.png">
     <link rel="shortcut icon" href="TemplateData/favicons.png">
     <link rel="stylesheet" href="TemplateData/style.css">
+
+    <script src="./hisplayer.js"></script>
+    <script src="./js/HisPlayerUnity.js"></script>
 </head>
   <body>
+    <div id="hisplayer-error"></div>
+
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas" width=720 height=1280 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
@@ -26,7 +31,6 @@
         <div id="unity-build-title">WEB3D VIEWER</div>
       </div>
     </div>
-    <script src = "https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
       var canvas = document.querySelector("#unity-canvas");
 
@@ -56,12 +60,12 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/20250324aa.loader.js";
+      var loaderUrl = buildUrl + "/20250326b.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/20250324aa.data.unityweb",
-        frameworkUrl: buildUrl + "/20250324aa.framework.js.unityweb",
-        codeUrl: buildUrl + "/20250324aa.wasm.unityweb",
+        dataUrl: buildUrl + "/20250326b.data.unityweb",
+        frameworkUrl: buildUrl + "/20250326b.framework.js.unityweb",
+        codeUrl: buildUrl + "/20250326b.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "TestComp",
         productName: "WEB3D VIEWER",
