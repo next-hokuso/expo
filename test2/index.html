@@ -32,7 +32,68 @@
     </div>
     <script src = "https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
-      var canvas = document.querySelector("#unity-canvas");
+      //var canvas = document.querySelector("#unity-canvas");
+
+
+        var container = document.querySelector("#unity-container");
+        var canvas = document.querySelector("#unity-canvas");
+        var loadingBar = document.querySelector("#unity-loading-bar");
+        var progressBarFull = document.querySelector("#unity-progress-bar-full");
+        var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+        var warningBanner = document.querySelector("#unity-warning");
+
+        //function unityShowBanner(msg, type) {
+        //    function updateBannerVisibility() {
+        //        warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+        //    }
+        //    var div = document.createElement('div');
+        //    div.innerHTML = msg;
+        //    warningBanner.appendChild(div);
+        //    if (type == 'error') div.style = 'background: red; padding: 10px;';
+        //    else {
+        //        if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+        //        setTimeout(function () {
+        //            warningBanner.removeChild(div);
+        //            updateBannerVisibility();
+        //        }, 5000);
+        //    }
+        //    updateBannerVisibility();
+        //}
+
+        //ウインドウサイズに合わせキャンバスサイズを変更
+        function fitWindowCanvasSize() {
+
+            var winHeight = window.innerHeight;
+            const isViewUnderBar = true;  //falseにすると下部のバーが画面外に表示
+            if (isViewUnderBar) {
+                const barHeight = 0/*18 * 2*/;            //下部のバーサイズ
+                const barHeightMargin = 8/*10 * 2*/;      //下部の追加余白サイズ
+                winHeight = winHeight - barHeight - barHeightMargin;
+            }
+            const winWidth = window.innerWidth;
+            const appWidth = 720/*"960"*/;
+            const appHeight = 1280/*"600"*/;
+            const scale = Math.min((winWidth / appWidth), (winHeight / appHeight));
+            const fixWidth = (appWidth * scale);
+            const fixHeight = (appHeight * scale);
+
+            canvas.style.width = fixWidth + 'px';
+            canvas.style.height = fixHeight + 'px';
+        }
+        //ウインドウのリサイズ時の処理
+        function windowResizeEvent() {
+            var timeoutId = 0;
+            const resizeDelay = 300;  //リサイズが完了したと判断する時間
+            window.onresize = () => {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => {
+                    //リサイズ終了時の処理
+                    fitWindowCanvasSize();
+                }, resizeDelay);
+            };
+        }
+
+
 
       // Shows a temporary message banner/ribbon for a few seconds, or
       // a permanent error message on top of the canvas if type=='error'.
@@ -106,8 +167,12 @@
 
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
-        canvas.style.width = "720px";
-        canvas.style.height = "1280px";
+        //canvas.style.width = "720px";
+        //canvas.style.height = "1280px";
+
+          var container = document.querySelector("#unity-container");
+          var canvas = document.querySelector("#unity-canvas");
+          fitWindowCanvasSize();
       }
 
       document.querySelector("#unity-loading-bar").style.display = "block";
@@ -127,9 +192,11 @@
               }).catch((message) => {
                 alert(message);
               });
+                windowResizeEvent();
             };
 
       document.body.appendChild(script);
+
 
     </script>
   </body>
